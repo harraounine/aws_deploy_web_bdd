@@ -1,0 +1,6 @@
+the solution given more time i will use:
+----------------------------------------
+* NACLs
+* aws_key_pair creypting
+* CI/CD ----> CodePipline: CodeCommit , CodeBuild , CodeDeploy
+* Kuberntes ---->EKS

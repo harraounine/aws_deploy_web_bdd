@@ -1,0 +1,116 @@
+****************************************************************************************************************
+Descrition:
+In this project we will deploy a WEB server and DataBase with a security and highly available (HA) architecture
+on AWS cloud with Terraform , so its Consists of this below files :
+
+******************************************************************************************************************
+1)-provider.tf
+2)-networks.tf
+3)-security_group.tf
+4)-database.tf
+5)-instances.sh
+6)-instances.tf
+7)-LoadBlancer.tf
+8)-variable.tf
+
+***********************************************************************************
+
+***********************************************************************************
+1)-provider.tf :
+----------------
+     a)- Configure Provider and set it to aws
+     b)- Set version and region
+
+************************************************************************************
+2)-networks.tf:
+---------------
+     a)- Create VPC
+
+     b)- Create internet gateway (my_IG) for server to be connected to internet
+          * attach it to VPC
+
+     c)- Create APP Subnets "my_app-subne1t"  and "my_app-subnet2"
+          * attach it to VPC
+          * attach it the availability zone
+
+     d)- Create BDD Subnets "my_db-subnet1"   and "my_db-subnet2"
+          * attach it to VPC
+          * attach it the availability zone
+
+     e)- Create routing table (for App)
+          * attach it to VPC
+          * attach it the GW
+
+     f)- Create EIP an NAT gateway
+          * attach EIP from the GW 
+          * attach NAT_GW to the GW
+    
+     g)- Associate App subnet1 and subnet2 with APP routing table   
+      
+     h)- Create routing table (for DB)
+          * attach it to VPC
+          * attach it the NAT_GW
+
+     i)- Associate Db subnet and subnet2 with DB routing table
+
+***************************************************************************************
+3)- security_group.tf :
+-----------------------
+     a)- Create a Security Group for WEB server
+          * attach it to VPC
+          * Set the ingresses and the egresses for the all protocols needed
+
+     b)- Create a Security Group for BDD server
+          * attach it to VPC
+          * Set the ingresses and the egresses for the all protocols needed
+          * attach the SSH and TCP protocol only to APP_SG 
+
+     3)- Create security  group for load balancer 
+          * attach it to VPC
+          * Set the ingresses and the egresses for the all protocols needed
+
+****************************************************************************************
+4)-database.tf :
+----------------
+     a)- Create my DB Subnet GROUPS
+         * attach it to DB subnet1 and subnet2
+         
+
+     b)- Create my DB Instane
+         * attach it to DB Subnet GROUPS
+         * attach it to DB SG
+         * attach it the availability zone
+******************************************************************************************
+5)-instances.sh :
+----------------
+     a)- Creat bash script (install, start,enable httpd server) + intial the web page
+
+******************************************************************************************* 
+6)-instances.tf :
+----------------
+      a)- Create  network interface  to attach ec2  instances
+          * attach it to APP subnet1 and subnet2
+
+      b)- Create my WEB1 and WEB2 Instance
+           * attach it to APP Subnets 
+           * attach it to the Network Interface
+           * attach it to APP SG
+           * attach it the availability zone
+
+*******************************************************************************************
+7)-LoadBlancer.tf :
+-------------------
+       a)- Create the ELB for WEB Load Balancing  
+           * attach it to LB_SG
+           * attach it to APP Subnets 
+
+********************************************************************************************
+8)-variable.tf :
+------------------
+      a)- Create all the variables needed in this project to optimise the script
+
+*********************************************************************************************
+
+    
+    
+   
