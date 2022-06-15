@@ -1,13 +1,13 @@
-
 #Create my DB Subnet GROUPS
 
 resource "aws_db_subnet_group" "dbgrp" {
   name       = "mydbgrp"
   subnet_ids = [aws_subnet.my_db-subnet[0].id, aws_subnet.my_db-subnet[1].id]
-  count      = 2
+  #count      = 2
 }
 
 #Create my DB Instane
+
 resource "aws_db_instance" "DB" {
   db_name                     = "mydb"
   engine                      = "mysql"
@@ -25,13 +25,13 @@ resource "aws_db_instance" "DB" {
   backup_retention_period     = 7
   backup_window               = "09:00-10:50"
   username                    = "admin"
-  db_subnet_group_name        = aws_db_subnet_group.dbgrp[count.index].id
-  password                    = "pas+D48+"
-  vpc_security_group_ids      = [aws_security_group.DB_SG.id]
-  delete_automated_backups    = true
-  apply_immediately           = true
-  availability_zone           = var.zones[count.index]
-  count                       = 2
+  db_subnet_group_name     = aws_db_subnet_group.dbgrp.id
+  password                 = "pas+D48+"
+  vpc_security_group_ids   = [aws_security_group.DB_SG.id]
+  delete_automated_backups = true
+  apply_immediately        = true
+  availability_zone        = var.zones[count.index]
+  count                    = 2
 
 }
 
